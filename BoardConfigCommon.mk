@@ -153,7 +153,3 @@ include device/qcom/sepolicy/sepolicy.mk
 
 BOARD_SEPOLICY_DIRS += \
     device/samsung/msm8939-common/sepolicy
-
-# GPS
-TARGET_GPS_HAL_PATH := device/samsung/a5-common/gps
-BOARD_VENDOR_QCOM_LOC_PDK_FEATURE_SET := true
