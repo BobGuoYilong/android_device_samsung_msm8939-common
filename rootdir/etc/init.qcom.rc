@@ -150,6 +150,13 @@ on boot
     chmod 0755 /efs/bluetooth/bt_addr
     restorecon_recursive /efs/bluetooth
 
+    # NFC : Permissions for NFC
+    chmod 0660 /dev/sec-nfc
+    chown nfc nfc /dev/sec-nfc
+
+    chmod 0660 /dev/pn547
+    chown nfc nfc /dev/pn547
+
     # Accelerometer_sensor
     chown system radio /sys/class/sensors/accelerometer_sensor/raw_data
     chown system radio /sys/class/sensors/accelerometer_sensor/calibration
