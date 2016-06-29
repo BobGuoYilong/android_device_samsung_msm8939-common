@@ -76,9 +76,9 @@ ALL_DEFAULT_INSTALLED_MODULES += $(MLD_SYMLINKS)
 # Modem
 MODEM_IMAGES := \
     modem.b00 modem.b01 modem.b02 modem.b03 modem.b04 modem.b05 \
-    modem.b06 modem.b08 modem.b09 modem.b12 modem.b13 modem.b14 \
-    modem.b15 modem.b16 modem.b17 modem.b18 modem.b21 modem.b22 \
-    modem.b23 modem.b25 modem.b26 modem.mdt mba.mbn
+    modem.b06 modem.b07 modem.b08 modem.b10 modem.b11 modem.b14 \
+    modem.b15 modem.b16 modem.b17 modem.b18 modem.b19 modem.b20 \
+    modem.b23 modem.b24 modem.b25 modem.b27 modem.b28 modem.mdt mba.mbn
 
 MODEM_SYMLINKS := $(addprefix $(TARGET_OUT_ETC)/firmware/,$(notdir $(MODEM_IMAGES)))
 $(MODEM_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
@@ -141,6 +141,19 @@ $(SKM_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
 
 ALL_DEFAULT_INSTALLED_MODULES += $(SKM_SYMLINKS)
 
+# SKMM
+SKMM_IMAGES := \
+    skmm_ta.b00 skmm_ta.b01 skmm_ta.b02 skmm_ta.b03 skmm_ta.mdt
+
+SKMM_IMAGES := $(addprefix $(TARGET_OUT_ETC)/firmware/,$(notdir $(SKMM_IMAGES)))
+$(SKMM_IMAGES): $(LOCAL_INSTALLED_MODULE)
+	@echo "SKMM firmware link: $@"
+	@mkdir -p $(dir $@)
+	@rm -rf $@
+	$(hide) ln -sf /firmware/image/$(notdir $@) $@
+
+ALL_DEFAULT_INSTALLED_MODULES += $(SKMM_IMAGES)
+
 # SSHDcap
 SSHDCPAP_IMAGES := \
     sshdcpap.b00 sshdcpap.b01 sshdcpap.b02 sshdcpap.b03 sshdcpap.mdt
@@ -170,6 +183,8 @@ ALL_DEFAULT_INSTALLED_MODULES += $(TBASE_SYMLINKS)
 # TZ
 TZ_IMAGES := \
     tz_ccm.b00 tz_ccm.b01 tz_ccm.b02 tz_ccm.b03 tz_ccm.mdt \
+    tz_iccc.b00 tz_iccc.b01 tz_iccc.b02 tz_iccc.b03 tz_iccc.mdt \
+    tzm.b00 tzm.b01 tzm.b02 tzm.b03 tzm.mdt \
     tz_otp.b00 tz_otp.b01 tz_otp.b02 tz_otp.b03 tz_otp.mdt
 
 TZ_SYMLINKS := $(addprefix $(TARGET_OUT_ETC)/firmware/,$(notdir $(TZ_IMAGES)))
