@@ -48,6 +48,7 @@ on early-boot
     write /sys/module/pil_msa/parameters/modem_auth_timeout_ms ${persist.sys.modem_auth_timeout}
     write /sys/module/peripheral_loader/parameters/proxy_timeout_ms ${persist.sys.pil_proxy_timeout}
     write /sys/kernel/boot_adsp/boot 1
+    chown root audio /sys/kernel/boot_adsp/boot
 
 on boot
     # Bluetooth
@@ -59,8 +60,10 @@ on boot
     chown bluetooth bluetooth /sys/module/hci_uart/parameters/ath_btwrite
     chown system system /sys/module/sco/parameters/disable_esco
     chown bluetooth bluetooth /sys/module/hci_smd/parameters/hcismd_set
+    chown system system /sys/module/radio_iris_transport/parameters/fmsmd_set
     chmod 0660 /sys/module/bluetooth_power/parameters/power
     chmod 0660 /sys/module/hci_smd/parameters/hcismd_set
+    chmod 0660 /sys/module/radio_iris_transport/parameters/fmsmd_set
     chmod 0660 /sys/class/rfkill/rfkill0/state
     chmod 0660 /proc/bluetooth/sleep/proto
     chown bluetooth net_bt_stack /dev/ttyHS0
@@ -150,6 +153,17 @@ on boot
     chmod 0755 /efs/bluetooth/bt_addr
     restorecon_recursive /efs/bluetooth
 
+    # NFC : Permissions for NFC
+    chmod 0660 /dev/sec-nfc
+    chown nfc nfc /dev/sec-nfc
+
+    # NFC : create data/nfc for nv storage
+    mkdir /data/nfc 0700 nfc nfc
+    mkdir /data/nfc/param 0700 nfc nfc
+
+    chmod 0660 /dev/pn547
+    chown nfc nfc /dev/pn547
+
     # Accelerometer_sensor
     chown system radio /sys/class/sensors/accelerometer_sensor/raw_data
     chown system radio /sys/class/sensors/accelerometer_sensor/calibration
@@ -169,6 +183,7 @@ on boot
     chown system radio /sys/class/sensors/proximity_sensor/thresh_high
     chown system radio /sys/class/sensors/proximity_sensor/thresh_low
     chown system radio /sys/class/sensors/proximity_sensor/prox_offset_pass
+    chown system radio /sys/class/sensors/proximity_sensor/prox_trim
 
     # Light_sensor
     chown system radio /sys/class/sensors/light_sensor/lux
@@ -183,7 +198,7 @@ on boot
     chown system radio /sys/class/sensors/gyro_sensor/selftest
     chown system radio /sys/class/sensors/gyro_sensor/vendor
     chown system radio /sys/class/sensors/gyro_sensor/name
-
+    
     # Magnetic_sensor
     chown system radio /sys/class/sensors/magnetic_sensor/selftest
     chown system radio /sys/class/sensors/magnetic_sensor/raw_data
@@ -199,8 +214,20 @@ on boot
     chown system radio /sys/class/sensors/grip_sensor/calibration
     chown system radio /sys/class/sensors/grip_sensor/threshold
     chown system radio /sys/class/sensors/grip_sensor/onoff
+    chown system radio /sys/class/sensors/grip_sensor/reset
+    chown system radio /sys/class/sensors/grip_sensor/mode
+    chown system radio /sys/class/sensors/grip_sensor/gain
+    chown system radio /sys/class/sensors/grip_sensor/start
+    chown system radio /sys/class/sensors/grip_sensor/normal_threshold
+    chown system radio /sys/class/sensors/grip_sensor/gain_ch2
+    chown system radio /sys/class/sensors/grip_sensor/raw_data_ch2
+    chown system radio /sys/class/sensors/grip_sensor/diff_avg_ch2
+    chown system radio /sys/class/sensors/grip_sensor/normal_threshold_ch2
+    chown system radio /sys/class/sensors/grip_sensor/ch_state
+    chown system radio /sys/class/sensors/grip_sensor/body_threshold
+    chown system radio /sys/class/sensors/grip_sensor/grip_flush
 
-    # Grip_sensor wifi
+    # Grip sensor wifi
     chown system radio /sys/class/sensors/grip_sensor_wifi/vendor
     chown system radio /sys/class/sensors/grip_sensor_wifi/name
     chown system radio /sys/class/sensors/grip_sensor_wifi/raw_data
@@ -227,6 +254,12 @@ on boot
     chmod 664  /sys/class/kgsl/kgsl-3d0/min_pwrlevel
     chown radio system /sys/class/kgsl/kgsl-3d0/gpu_available_frequencies
     chmod 664  /sys/class/kgsl/kgsl-3d0/gpu_available_frequencies
+
+    # VR Performance
+    chown system system /sys/class/kgsl/kgsl-3d0/dispatch/inflight
+    chmod 0664  /sys/class/kgsl/kgsl-3d0/dispatch/inflight
+    chown system system /sys/class/kgsl/kgsl-3d0/dispatch/inflight_low_latency
+    chmod 0664  /sys/class/kgsl/kgsl-3d0/dispatch/inflight_low_latency
 
     # Permissions for SSRM
     chmod 0664 /sys/devices/platform/sec-thermistor/temperature
@@ -284,11 +317,17 @@ on boot
 
     chown system system /sys/class/lcd/panel/panel/auto_brightness
     chown system system /sys/class/lcd/panel/window_type
+    chown system system /sys/class/lcd/panel/cell_id
     chown radio system /sys/class/lcd/panel/power_reduce
     chown radio system /sys/class/lcd/panel/siop_enable
     chown radio system /sys/class/lcd/panel/temperature
     chown radio system /sys/class/lcd/panel/tuning
     chown radio system /sys/class/lcd/panel/lux
+    chown system media_rw /sys/class/backlight/panel/weakness_hbm_comp
+    chown system system  /sys/class/backlight/panel/auto_brightness
+    chmod 0660 /sys/class/backlight/panel/auto_brightness
+    chown system system  /sys/class/leds/lcd-backlight/brightness
+    chmod 0660 /sys/class/leds/lcd-backlight/brightness
 
     chown radio system /sys/class/lcd/panel/partial_disp
     chmod 0660 /sys/class/lcd/panel/partial_disp
@@ -305,20 +344,28 @@ on boot
     chown system system /sys/class/camera/rear/isp_core
     chown system system /sys/class/camera/rear/rear_camfw_full
     chown system system /sys/class/camera/rear/rear_camfw
+    chown system system /sys/class/camera/rear/rear_afcal
     chown system system /sys/class/camera/rear/rear_camtype
+    chown system system /sys/class/camera/rear/rear_checkfw_user
+    chown system system /sys/class/camera/rear/rear_checkfw_factory
+    chown system system /sys/class/camera/rear/rear_caminfo
     chown system radio /sys/class/camera/flash/rear_flash
+    chown system radio /sys/class/camera/flash/front_flash
     chown system system /sys/class/camera/front/front_camfw
     chown system system /sys/class/camera/front/front_camtype
     chown system system /sys/class/camera/front/front_camfw_full
     chown system system /sys/class/camera/front/front_camfw_load
-    chown system system /sys/class/camera/rear/rear_checkfw_user
-    chown system system /sys/class/camera/rear/rear_checkfw_factory
+    chown system system /sys/class/camera/front/front_checkfw_user
+    chown system system /sys/class/camera/front/front_checkfw_factory
+    chown system system /sys/class/camera/front/front_caminfo
 
     # OTG Test
     chown system radio /sys/class/host_notify/usb_otg/booster
     chmod 0660 /sys/class/host_notify/usb_otg/booster
+    chown system usb /sys/class/usb_notify/usb_control/disable
+    chmod 0660 /sys/class/usb_notify/usb_control/disable
 
-# msm specific files that need to be created on /data
+    # msm specific files that need to be created on /data
 on post-fs-data
 
     # we will remap this as /mnt/sdcard with the sdcard fuse tool
@@ -332,6 +379,9 @@ on post-fs-data
     mkdir /data/misc/wifi/wpa_supplicant 0770 wifi wifi
     mkdir /data/misc/dhcp 0775 dhcp dhcp
     chown dhcp dhcp /data/misc/dhcp
+
+    # Professioanl Audio
+    mkdir /data/misc/jack 0770 jack system
 
     # for WIFI TRP/TIS
     chown system root /data/.psm.info
@@ -364,6 +414,7 @@ on post-fs-data
 
     # Create directory used by display clients
     mkdir /data/misc/display 0770 system graphics
+    mkdir /persist/display 0770 system graphics
 
     # Mounting of persist is moved to 'on emmc-fs' and 'on fs' sections
     # We chown/chmod /persist again so because mount is run as root + defaults
@@ -424,6 +475,13 @@ on post-fs-data
     mkdir /data/nfc 0770 nfc nfc
     mkdir /data/nfc/param 0770 nfc nfc
 
+    # Sensor
+    mkdir /persist/sensors 0770 system system
+
+    # Create FM dir for patchdownloader
+    mkdir /data/misc/fm 0770 system system
+    chmod 0770 /data/misc/fm
+
     # sec_efs_file
     mkdir /efs/sec_efs 0775 radio system
 
@@ -453,6 +511,8 @@ on post-fs-data
     chown system system /dev/icdr
     chmod 0644 /dev/icdr
     chown system system /dev/tzic
+    restorecon /dev/icd
+    restorecon /dev/icdr
     
     # MTP device permission
     chmod 0660 /dev/usb_mtp_gadget
@@ -476,6 +536,7 @@ on property:persist.sys.ssr.restart_level=*
 
 on property:persist.sys.ssr.enable_ramdumps=1
     write /sys/module/subsystem_restart/parameters/enable_ramdumps 1
+    mkdir /data/ramdump 770 system system
     start ss_ramdump
 
 on property:persist.sys.ssr.enable_ramdumps=0
@@ -559,7 +620,7 @@ service qmiproxy /system/bin/qmiproxy
 service qmuxd /system/bin/qmuxd
     class main
     user root
-    group radio audio bluetooth gps qcom_diag
+    group radio audio bluetooth gps nfc qcom_diag
 
 service netmgrd /system/bin/netmgrd
     class main
@@ -692,6 +753,7 @@ service charger /charger
     class charger
     group log
     seclabel u:r:healthd:s0
+    group root system
 
 service ssr_diag /system/bin/ssr_diag
     class late_start

@@ -77,9 +77,8 @@ service perfd /vendor/bin/perfd
    user root
    disabled
 
-service thermal-engine /vendor/bin/thermal-engine
-   class core
-   seclabel u:r:thermal-engine:s0
+service thermal-engine /system/vendor/bin/thermal-engine
+   class main
    user root
    socket thermal-send-client stream 0666 system system
    socket thermal-recv-client stream 0660 system system
@@ -99,7 +98,8 @@ service audiod /system/bin/audiod
 on boot
     start rmt_storage
     insmod /system/lib/modules/adsprpc.ko
-# access permission for secure touch
+
+    # Access permission for secure touch
     chmod 0660 /sys/devices/soc.0/78b9000.i2c/i2c-5/5-0020/secure_touch_enable
     chmod 0440 /sys/devices/soc.0/78b9000.i2c/i2c-5/5-0020/secure_touch
     chmod 0660 /sys/devices/soc.0/78b9000.i2c/i2c-5/5-0070/secure_touch_enable
@@ -123,5 +123,5 @@ on charger
     chmod 0664 /sys/class/power_supply/bms/current_now
     chmod 0664 /sys/class/power_supply/bms/voltage_ocv
     start vm_bms
-    load_all_props
+    load_system_props
     start qcom-post-boot
