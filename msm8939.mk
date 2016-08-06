@@ -110,8 +110,7 @@ PRODUCT_PACKAGES += \
     libOmxQcelp13Enc \
     libOmxVdec \
     libOmxVenc \
-    libstagefrighthw \
-    libOmxVdecHevc
+    libstagefrighthw
 
 # Power HAL
 PRODUCT_PACKAGES += \
@@ -189,9 +188,10 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     lights.msm8916
 
-# libril_shim
+# Radio
 PRODUCT_PACKAGES += \
-   libril_shim
+   libril_shim \
+   libprotobuf-cpp-full
 
 # Misc
 PRODUCT_PACKAGES += \
