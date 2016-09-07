@@ -56,7 +56,7 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     audiod \
     audio.a2dp.default \
-    audio.primary.msm8916 \
+    audio.primary.msm8939 \
     audio.r_submix.default \
     audio.usb.default \
     libqcompostprocbundle \
@@ -66,11 +66,11 @@ PRODUCT_PACKAGES += \
 
 # Display
 PRODUCT_PACKAGES += \
-    copybit.msm8916 \
-    gralloc.msm8916 \
-    hwcomposer.msm8916 \
+    copybit.msm8939 \
+    gralloc.msm8939 \
+    hwcomposer.msm8939 \
     libtinyxml \
-    memtrack.msm8916
+    memtrack.msm8939
 
 # IPv6 tethering
 PRODUCT_PACKAGES += \
@@ -85,11 +85,11 @@ PRODUCT_PACKAGES += \
 
 # Keystore
 PRODUCT_PACKAGES += \
-    keystore.msm8916
+    keystore.msm8939
 
 # Camera
 PRODUCT_PACKAGES += \
-    camera.msm8916 \
+    camera.msm8939 \
     libxml2 \
     Snap
     
@@ -114,7 +114,7 @@ PRODUCT_PACKAGES += \
 
 # Power HAL
 PRODUCT_PACKAGES += \
-    power.msm8916
+    power.msm8939
 
 # Live Wallpapers
 PRODUCT_PACKAGES += \
@@ -186,7 +186,7 @@ PRODUCT_COPY_FILES += \
 
 # Lights
 PRODUCT_PACKAGES += \
-    lights.msm8916
+    lights.msm8939
 
 # Radio
 PRODUCT_PACKAGES += \
@@ -205,7 +205,7 @@ PRODUCT_COPY_FILES += \
     
 # GPS HAL
 PRODUCT_PACKAGES += \
-    gps.msm8916
+    gps.msm8939
 
 # Browser
 PRODUCT_PACKAGES += \

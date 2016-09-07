@@ -21,11 +21,11 @@ include device/samsung/qcom-common/BoardConfigCommon.mk
 TARGET_SPECIFIC_HEADER_PATH := $(VENDOR_PATH)/include
 
 # Platform
-TARGET_BOARD_PLATFORM := msm8916
+TARGET_BOARD_PLATFORM := msm8939
 TARGET_BOARD_PLATFORM_GPU := qcom-adreno405
 
 # Bootloader
-TARGET_BOOTLOADER_BOARD_NAME := MSM8916
+TARGET_BOOTLOADER_BOARD_NAME := MSM8939
 
 # Architecture
 TARGET_CPU_VARIANT := cortex-a53
