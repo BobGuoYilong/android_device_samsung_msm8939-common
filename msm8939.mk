@@ -208,8 +208,8 @@ PRODUCT_PACKAGES += \
     gps.msm8939
 
 # Browser
-PRODUCT_PACKAGES += \
-    Gello
+#PRODUCT_PACKAGES += \
+#   Gello
 
 # Common Qualcomm
 $(call inherit-product, device/samsung/qcom-common/qcom-common.mk)
