@@ -10,7 +10,7 @@ public final class Constants {
 
     public static final String TS_PATH = "/sys/class/input/input1/enabled";
 
-    public static final String TK_PATH = "/sys/class/input/input9/enabled";
+    public static final String TK_PATH = "/sys/class/input/input10/enabled";
 
     // Doze
 
