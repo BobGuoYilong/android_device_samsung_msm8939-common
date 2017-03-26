@@ -88,3 +88,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # Disable Strict Mode
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.sys.strictmode.disable=true
+
+# NFC
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.nfc.port=I2C

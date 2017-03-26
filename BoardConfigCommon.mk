@@ -156,3 +156,6 @@ include device/qcom/sepolicy/sepolicy.mk
 
 BOARD_SEPOLICY_DIRS += \
     device/samsung/msm8939-common/sepolicy
+
+# NFC
+BOARD_NFC_CHIPSET := pn547
