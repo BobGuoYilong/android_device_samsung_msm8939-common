@@ -44,7 +44,7 @@ on fs
     # Audio NXP
     chmod 0666 /dev/i2c-1
     chown system system /dev/i2c-1
-
+    
 on post-fs-data
     mkdir /data/tombstones 0771 system system
     mkdir /tombstones/modem 0771 system system
@@ -72,7 +72,7 @@ service qseecomd /system/bin/qseecomd
    user root
    group root
 
-service perfd /vendor/bin/perfd
+service perfd /system/vendor/bin/perfd
    class main
    user root
    disabled

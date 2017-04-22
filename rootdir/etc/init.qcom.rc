@@ -26,7 +26,6 @@
 #
 
 import init.qcom.usb.rc
-import init.qcom.power.rc
 import init.target.rc
 
 on early-init
@@ -60,10 +59,8 @@ on boot
     chown bluetooth bluetooth /sys/module/hci_uart/parameters/ath_btwrite
     chown system system /sys/module/sco/parameters/disable_esco
     chown bluetooth bluetooth /sys/module/hci_smd/parameters/hcismd_set
-    chown system system /sys/module/radio_iris_transport/parameters/fmsmd_set
     chmod 0660 /sys/module/bluetooth_power/parameters/power
     chmod 0660 /sys/module/hci_smd/parameters/hcismd_set
-    chmod 0660 /sys/module/radio_iris_transport/parameters/fmsmd_set
     chmod 0660 /sys/class/rfkill/rfkill0/state
     chmod 0660 /proc/bluetooth/sleep/proto
     chown bluetooth net_bt_stack /dev/ttyHS0
@@ -364,6 +361,10 @@ on boot
     chmod 0660 /sys/class/host_notify/usb_otg/booster
     chown system usb /sys/class/usb_notify/usb_control/disable
     chmod 0660 /sys/class/usb_notify/usb_control/disable
+    
+    # Adaptive LMK
+    write /sys/module/lowmemorykiller/parameters/enable_adaptive_lmk 1
+    write /sys/module/lowmemorykiller/parameters/vmpressure_file_min 81250
 
     # msm specific files that need to be created on /data
 on post-fs-data
@@ -478,10 +479,6 @@ on post-fs-data
     # Sensor
     mkdir /persist/sensors 0770 system system
 
-    # Create FM dir for patchdownloader
-    mkdir /data/misc/fm 0770 system system
-    chmod 0770 /data/misc/fm
-
     # sec_efs_file
     mkdir /efs/sec_efs 0775 radio system
 
@@ -543,6 +540,7 @@ on property:persist.sys.ssr.enable_ramdumps=0
     write /sys/module/subsystem_restart/parameters/enable_ramdumps 0
 
 on property:sys.boot_completed=1
+    start qcom-post-boot
     write /dev/kmsg "Boot completed "
 
 # corefile limit and ETB enabling
@@ -725,18 +723,17 @@ service sec-sh /system/bin/sh /system/etc/init.sec.boot.sh
     class main
     user root
     oneshot
+    
+service qcom-post-boot /system/bin/sh /system/etc/init.qcom.post_boot.sh
+    class late_start
+    user root
+    disabled
+    oneshot    
 
 service loc_launcher /system/bin/loc_launcher
     #loc_launcher will start as root and set its uid to gps
     class late_start
     group gps inet net_raw qcom_diag net_admin wifi
-
-service fm_dl /system/bin/sh /system/etc/init.qcom.fm.sh
-    class late_start
-    user root
-    group system
-    disabled
-    oneshot
 
 on property:crypto.driver.load=1
      insmod /system/lib/modules/qce.ko
