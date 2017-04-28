@@ -31,6 +31,7 @@ public class HighTouchSensitivity {
 
     private static final String TAG = "HighTouchSensitivity";
 
+    private static final String PATH_TK = "/sys/class/sec/sec_touchkey/glove_mode";
     private static final String COMMAND_PATH = "/sys/class/sec/tsp/cmd";
     private static final String COMMAND_RESULT_PATH = "/sys/class/sec/tsp/cmd_result";
     private static final String GLOVE_MODE = "glove_mode";
@@ -69,6 +70,7 @@ public class HighTouchSensitivity {
      * failed; true in any other case.
      */
     public static boolean setEnabled(boolean status) {
-        return FileUtils.writeLine(COMMAND_PATH, status ? GLOVE_MODE_ENABLE : GLOVE_MODE_DISABLE);
+        return FileUtils.writeLine(COMMAND_PATH, status ? GLOVE_MODE_ENABLE : GLOVE_MODE_DISABLE) &&
+               FileUtils.writeLine(PATH_TK, (status ? "1" : "0"));
     }
 }
