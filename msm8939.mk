@@ -50,10 +50,6 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     SamsungDoze
 
-# Input Disabler
-PRODUCT_PACKAGES += \
-    InputDisabler
-    
 # Audio
 PRODUCT_PACKAGES += \
     audiod \
@@ -229,7 +225,6 @@ PRODUCT_COPY_FILES += \
 # FM packages
 PRODUCT_PACKAGES += \
     FM2 \
-    FMRecord \
     libqcomfm_jni \
     qcom.fmradio
 
