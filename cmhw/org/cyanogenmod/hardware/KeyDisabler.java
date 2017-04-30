@@ -34,7 +34,7 @@ public class KeyDisabler {
     private static String CONTROL_PATH_CONTROL = "/sys/class/sec/sec_touchkey/input/force_disable";
 
     public static boolean isSupported() {
-        return new File(CONTROL_PATH_CONTROL).exists();
+        return false;//new File(CONTROL_PATH_CONTROL).exists();
     }
 
     public static boolean isActive() {
