@@ -1,2 +1,7 @@
 allow mediaserver system_file:file { execmod };
 allow mediaserver media_msm8939hw_prop:file r_file_perms;
+allow mediaserver system_data_file:sock_file write;
+allow mediaserver system_prop:property_service set;
+allow mediaserver default_prop:property_service set;
+allow mediaserver device:chr_file { read write open ioctl };
+

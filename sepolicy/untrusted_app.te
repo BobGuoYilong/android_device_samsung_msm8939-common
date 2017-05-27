@@ -1,0 +1,9 @@
+allow untrusted_app device:dir { read open };
+allow untrusted_app init:dir getattr;
+allow untrusted_app logd:dir { getattr search };
+allow untrusted_app logd:file { read open };
+allow untrusted_app ueventd:dir { getattr search };
+allow untrusted_app ueventd:file { read open };
+allow untrusted_app zygote:dir search;
+allow untrusted_app zygote:file { read open };
+
