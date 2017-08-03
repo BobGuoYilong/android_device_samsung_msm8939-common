@@ -4,4 +4,4 @@ allow mediaserver system_data_file:sock_file write;
 allow mediaserver system_prop:property_service set;
 allow mediaserver default_prop:property_service set;
 allow mediaserver device:chr_file { read write open ioctl };
-
+allow mediaserver mediaserver_tmpfs:file { read write execute };
