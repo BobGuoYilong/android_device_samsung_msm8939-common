@@ -31,23 +31,42 @@ TARGET_BOOTLOADER_BOARD_NAME := MSM8916
 TARGET_CPU_VARIANT := cortex-a53
 TARGET_CPU_CORTEX_A53 := true
 
+# Malloc implementation
+MALLOC_SVELTE := true
+
+# Legacy blobs
+TARGET_NEEDS_PLATFORM_TEXT_RELOCATIONS := true
+
 # Enable dex-preoptimization to speed up first boot sequence
 WITH_DEXPREOPT := true
 
 # Board CFLAGS
 TARGET_GLOBAL_CFLAGS += -mfpu=neon -mfloat-abi=softfp
 TARGET_GLOBAL_CPPFLAGS += -mfpu=neon -mfloat-abi=softfp
-COMMON_GLOBAL_CFLAGS += -DQCOM_BSP
+TARGET_USES_QCOM_BSP := true
 
 # Kernel
 TARGET_KERNEL_ARCH := arm
 BOARD_DTBTOOL_ARG := -2
 BOARD_KERNEL_BASE := 0x80000000
-BOARD_KERNEL_CMDLINE := console=null androidboot.hardware=qcom user_debug=23 msm_rtb.filter=0x3F ehci-hcd.park=3 androidboot.bootdevice=7824900.sdhci androidboot.selinux=permissive
 BOARD_KERNEL_PAGESIZE := 2048
 BOARD_KERNEL_SEPARATED_DT := true
 BOARD_KERNEL_TAGS_OFFSET := 0x01e00000
 BOARD_RAMDISK_OFFSET     := 0x02000000
+BOARD_KERNEL_CMDLINE := \
+                     console=null \
+                     androidboot.hardware=qcom \
+                     user_debug=23 \
+                     msm_rtb.filter=0x3F \
+                     ehci-hcd.park=3 \
+                     androidboot.bootdevice=7824900.sdhci \
+                     memmap=0x100000@0x85000000 \
+                     ramoops.mem_address=0x85000000 \
+                     ramoops.mem_size=0x100000 \
+                     ramoops.record_size=100000 \
+                     ramoops.console_size=100000 \
+                     ramoops.ftrace_size=100000 \
+                     androidboot.selinux=permissive
 
 # File System
 TARGET_USERIMAGES_USE_EXT4 := true
@@ -57,9 +76,6 @@ BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE := ext4
 BOARD_HAVE_BLUETOOTH := true
 BOARD_HAVE_BLUETOOTH_QCOM := true
 BLUETOOTH_HCI_USE_MCT := true
-
-# Malloc Implementation
-MALLOC_IMPL := dlmalloc
 
 # Audio
 BOARD_USES_ALSA_AUDIO := true
@@ -86,7 +102,7 @@ TARGET_CONTINUOUS_SPLASH_ENABLED := true
 EXTENDED_FONT_FOOTPRINT := true
 
 # Power
-TARGET_POWERHAL_SET_INTERACTIVE_EXT := $(VENDOR_PATH)/power/power_ext.c
+TARGET_POWERHAL_SET_INTERACTIVE_EXT := system/device/samsung/msm8939-common/power/power_ext.c
 TARGET_POWERHAL_VARIANT := qcom
 
 # Charger
@@ -144,7 +160,7 @@ TARGET_PROVIDES_LIBLIGHT := true
 BOARD_HARDWARE_CLASS += $(VENDOR_PATH)/cmhw
 
 # MSM8939 Custom RIL
-BOARD_RIL_CLASS := ../../../device/samsung/msm8939-common/ril/
+# BOARD_RIL_CLASS := ../../../device/samsung/msm8939-common/ril/
 USE_DEVICE_SPECIFIC_DATASERVICES := true
 
 # Radio
@@ -153,7 +169,7 @@ TARGET_GLOBAL_CFLAGS += -DANDROID_MULTI_SIM
 TARGET_GLOBAL_CPPFLAGS += -DANDROID_MULTI_SIM
 
 # Sepolicy
-include device/qcom/sepolicy/sepolicy.mk
+-include device/qcom/sepolicy/sepolicy.mk
 
 BOARD_SEPOLICY_DIRS += \
     device/samsung/msm8939-common/sepolicy

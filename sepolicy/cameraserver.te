@@ -1,0 +1,5 @@
+#=========== cameraserver ==========
+allow cameraserver camera_socket:sock_file { write };
+
+#============= cameraserver ==============
+allow cameraserver mpctl_socket:dir search;
