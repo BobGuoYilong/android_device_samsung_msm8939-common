@@ -142,11 +142,27 @@ PRODUCT_PACKAGES += \
     init.target.rc \
     ueventd.qcom.rc
 
-# GPS configuration
+# GPS
+PRODUCT_PACKAGES += \
+    gps.msm8916 \
+    libloc_api_v02 \
+    libloc_ds_api
+
 PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/gps/flp.conf:system/etc/flp.conf \
     $(LOCAL_PATH)/gps/gps.conf:system/etc/gps.conf \
     $(LOCAL_PATH)/gps/izat.conf:system/etc/izat.conf \
-    $(LOCAL_PATH)/gps/flp.conf:system/etc/flp.conf
+    $(LOCAL_PATH)/gps/quipc.conf:system/etc/quipc.conf \
+    $(LOCAL_PATH)/gps/sap.conf:system/etc/sap.conf
+
+# GPS Permissions
+PRODUCT_COPY_FILES += \
+	frameworks/native/data/etc/android.hardware.location.gps.xml:system/etc/permissions/android.hardware.location.gps.xml
+
+# GPS Location
+PRODUCT_PACKAGES += \
+	com.android.location.provider \
+	com.android.location.provider.xml
 
 # MSM IPC Router configuration
 PRODUCT_COPY_FILES += \
@@ -200,10 +216,6 @@ PRODUCT_PACKAGES += \
 # IRQ balance
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/msm_irqbalance.conf:system/vendor/etc/msm_irqbalance.conf
-    
-# GPS HAL
-PRODUCT_PACKAGES += \
-    gps.msm8916
 
 # NFC
 # See https://github.com/CyanogenMod/android_external_libnfc-nci/blob/cm-14.1/halimpl/pn54x/Android.mk#L21
