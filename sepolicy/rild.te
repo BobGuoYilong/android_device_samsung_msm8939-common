@@ -3,4 +3,4 @@ allow rild self:capability { dac_read_search chown };
 allow rild unlabeled:dir search;
 allow rild unlabeled:file { read getattr open };
 allow rild default_prop:property_service set;
-
+allow rild ctl_rildaemon_prop:property_service set;
