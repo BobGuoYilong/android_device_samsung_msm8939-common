@@ -34,9 +34,6 @@ TARGET_CPU_CORTEX_A53 := true
 # Malloc implementation
 MALLOC_SVELTE := true
 
-# Legacy blobs
-TARGET_NEEDS_PLATFORM_TEXT_RELOCATIONS := true
-
 # Enable dex-preoptimization to speed up first boot sequence
 WITH_DEXPREOPT := true
 
@@ -66,7 +63,8 @@ BOARD_KERNEL_CMDLINE := \
                      ramoops.record_size=100000 \
                      ramoops.console_size=100000 \
                      ramoops.ftrace_size=100000 \
-                     androidboot.selinux=permissive
+
+                     #androidboot.selinux=permissive
 
 # File System
 TARGET_USERIMAGES_USE_EXT4 := true
@@ -160,7 +158,7 @@ TARGET_PROVIDES_LIBLIGHT := true
 BOARD_HARDWARE_CLASS += $(VENDOR_PATH)/cmhw
 
 # MSM8939 Custom RIL
-# BOARD_RIL_CLASS := ../../../device/samsung/msm8939-common/ril/
+BOARD_RIL_CLASS := ../../../device/samsung/msm8939-common/ril/
 USE_DEVICE_SPECIFIC_DATASERVICES := true
 
 # Radio
@@ -180,3 +178,11 @@ BOARD_NFC_CHIPSET := pn547
 # FM Radio
 BOARD_HAVE_QCOM_FM := true
 TARGET_QCOM_NO_FM_FIRMWARE := true
+
+# GPS
+TARGET_GPS_HAL_PATH := $(VENDOR_PATH)/gps
+BOARD_VENDOR_QCOM_LOC_PDK_FEATURE_SET := true
+
+# Init
+TARGET_INIT_VENDOR_LIB := libinit_msm8939
+TARGET_RECOVERY_DEVICE_MODULES := libinit_msm8939

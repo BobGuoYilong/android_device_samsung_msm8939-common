@@ -1,2 +1,6 @@
 allow audioserver diag_device:chr_file { read write };
 allow audioserver rild:unix_stream_socket connectto;
+allow audioserver system_file:file execmod;
+allow audioserver i2c_device:chr_file { open read write ioctl getattr };
+allow audioserver audio_prop:property_service set;
+allow audioserver efs_file:dir search;

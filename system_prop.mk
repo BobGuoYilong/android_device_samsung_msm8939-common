@@ -21,9 +21,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.multisim.simslotcount=2 \
     ro.multisim.set_audio_params=true \
     ro.telephony.ril.config=simactivation \
-    persist.data.qmi.adb_logmask=0
-
-#        ro.telephony.ril_class=SamsungMSM8939RIL \
+    persist.data.qmi.adb_logmask=0 \
+    ro.telephony.ril_class=SamsungMSM8939RIL
 
 # Netmgrd
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -93,3 +92,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # NFC
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.nfc.port=I2C
+#VoLTE
+PRODUCT_PROPERTY_OVERRIDES += \
+    net.lte.volte_call_capable=true \
+    persist.volte_enabled_by_hw=1
