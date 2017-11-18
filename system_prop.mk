@@ -64,7 +64,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # Media
 PRODUCT_PROPERTY_OVERRIDES += \
     mm.enable.qcom_parser=3183219 \
-    media.aac_51_output_enabled=true
+    media.aac_51_output_enabled=true \
+    media.stagefright.legacyencoder=true \
+    media.stagefright.less-secure=true
 
 # Misc
 PRODUCT_PROPERTY_OVERRIDES += \
